@@ -13,7 +13,7 @@ unlink() - removes a file from file system
 waitpid() - lets the parent process wait for pid-Specific child to finish
 wait() - waits for any process to finish
  */
-fuckups
+
 
 int main(int ac, char **av, char **env)
 {
