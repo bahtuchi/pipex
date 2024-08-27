@@ -46,20 +46,38 @@ void ft_putstr(char *str)
 	}
 }
 
-
-
+//Maybe not needed
 void	check_files(int argc, char **argv)
 {
 
 }
 
 void	free_everything(t_pipeline pipeline)
+{
+
+}
+
+
 char	*get_path(char **splitted_path, char *command)
+{
+	t_pipeline pipex;
+
+
+
+}
+
 char	*find_path(char **envp)
+{
+	t_pipeline pipex;
+
+}
 
 
 int main(int argc, char **argv, char **envp)
 {
+	t_pipeline pipex;
+
+
     if (argc != 5)
     {
 		ft_putstr("Function must have 4 Arguments!");
@@ -68,11 +86,40 @@ int main(int argc, char **argv, char **envp)
 	if (access(argv[1], R_OK) == -1)
 	{
 		ft_putstr("wrong Input-File");
+		exit (EXIT_FAILURE);   
 	}
-	if (access(argv[5], W_OK) == -1)
+	if (access(argv[5], W_OK || R_OK) == -1)
 	{
 		ft_putstr("wrong Output-File");
+		exit (EXIT_FAILURE); 
 	}
-	
+	if (pipe(pipex.tube) == -1)
+	{
+		return 1;
+	}
+
+	pipex.pid1 = fork();
+	if (pipex.pid1 < 0)
+	{
+		return 2;
+	}
+//child
+	if (pipex.pid1 == 0)
+	{
+		dup2(pipex.tube[1], STDOUT_FILENO);
+		close(pipex.tube[0]);
+		close(pipex.tube[1]);
+		execve("", NULL);
+	}
+//other child
+	pipex.pid2 = fork();
+	if (pipex.pid2 < 0)
+	{
+		dup2(pipex.tube[0], STDIN_FILENO);
+		close(pipex.tube[0]);
+		close(pipex.tube[1]);
+		return 3;
+	}
+
 
 }
