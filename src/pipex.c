@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omed <omed@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/31 08:29:30 by omed              #+#    #+#             */
+/*   Updated: 2024/08/31 23:46:13 by omed             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 /*
 functions to be used:
@@ -48,36 +60,41 @@ char *path_extract(char **envp)
 	return (envp[i] + 5);
 }
 
-char	*command_exec(char **envp, char *cmd)
+char	*command_to_path(char **envp, char *cmd)
 {
 		t_pipeline pipex;
 
-	/*if (argc != 5)
-    {
-		ft_putstr_fd("Function must have 4 Arguments!", 1);
-		exit (EXIT_FAILURE);   
-	}*/
 	//printf("%s", path_extract(envp));
-	pipex.splitted_path = ft_split(path_extract(envp), ':');
+
 	int i = 0;
 	while(pipex.splitted_path[i])
 	{
 		if((ft_strncmp("/usr/bin", pipex.splitted_path[i], 8) == 0))
 		{
 			pipex.command_path = ft_strjoin(pipex.splitted_path[i], "/");
+			pipex.command = ft_strjoin(pipex.command_path, cmd);
 			free(pipex.splitted_path);
-			pipex.command = ft_strjoin(pipex.command_path, cmd)
-			
+			free(pipex.command_path);
+			if(access(pipex.command, X_OK) == 0)
+				return(pipex.command);
+			free(pipex.command);
+			i++;
 		}
-		i++;
+	i++;
 	}
-
 }
 
-/*char *find_command(char **path_dir, char *cmd)
+char *full_path(char *cmd, char **envp)
 {
+	t_pipeline pipex;
+	
+	pipex.splitted_path = ft_split(path_extract(envp), ':');
+	
+	int	i;
 
-}*/
+	i = 0;
+	while(pipex.splitted_path)
+}
 
 /*
 void ft_putstr(char *str)
@@ -180,18 +197,4 @@ int main (int argc, char **argv, char **envp)
 		exit (EXIT_FAILURE);   
 	}*/
 	//printf("%s", path_extract(envp));
-	pipex.splitted_path = ft_split(path_extract(envp), ':');
-	int i = 0;
-	while(pipex.splitted_path[i])
-	{
-		if((ft_strncmp("/usr/bin", pipex.splitted_path[i], 8) == 0))
-		{
-			pipex.command_path = ft_strjoin(pipex.splitted_path[i], "/");
-			free(pipex.splitted_path);
-			pipex.command = ft_strjoin(pipex.command_path, cmd)
-		}
-		i++;
-	}
-
-	printf("%s", pipex.command_path);
 }
