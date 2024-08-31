@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jotavare <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/20 04:29:14 by jotavare          #+#    #+#              #
-#    Updated: 2022/12/20 04:29:16 by jotavare         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
@@ -38,7 +26,3 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-so:
-	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRCS) $(BONUS_SRCS)
-	gcc -nostartfiles -shared -o libft.so $(OBJS) $(BONUS_OBJS)

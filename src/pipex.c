@@ -19,6 +19,7 @@ wait() - waits for any process to finish
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include "../libft/libft.h"
 
 
 typedef struct s_pipeline
@@ -28,12 +29,57 @@ typedef struct s_pipeline
 	int		tube[2];
 	int		pid1;
 	int		pid2;
-	char	**command;
-	char	**command_path;
+	char	*command;
+	char	*command_path;
 	char	**splitted_path;
 	char	*env_path;
 }	t_pipeline;
 
+
+char *path_extract(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (ft_strncmp("PATH", envp[i], 4) != 0)
+	{
+		i++;
+	}
+	return (envp[i] + 5);
+}
+
+char	*command_exec(char **envp, char *cmd)
+{
+		t_pipeline pipex;
+
+	/*if (argc != 5)
+    {
+		ft_putstr_fd("Function must have 4 Arguments!", 1);
+		exit (EXIT_FAILURE);   
+	}*/
+	//printf("%s", path_extract(envp));
+	pipex.splitted_path = ft_split(path_extract(envp), ':');
+	int i = 0;
+	while(pipex.splitted_path[i])
+	{
+		if((ft_strncmp("/usr/bin", pipex.splitted_path[i], 8) == 0))
+		{
+			pipex.command_path = ft_strjoin(pipex.splitted_path[i], "/");
+			free(pipex.splitted_path);
+			pipex.command = ft_strjoin(pipex.command_path, cmd)
+			
+		}
+		i++;
+	}
+
+}
+
+/*char *find_command(char **path_dir, char *cmd)
+{
+
+}*/
+
+/*
 void ft_putstr(char *str)
 {
 	int	i;
@@ -122,4 +168,30 @@ int main(int argc, char **argv, char **envp)
 	}
 
 
+}*/
+
+int main (int argc, char **argv, char **envp)
+{
+	t_pipeline pipex;
+
+	/*if (argc != 5)
+    {
+		ft_putstr_fd("Function must have 4 Arguments!", 1);
+		exit (EXIT_FAILURE);   
+	}*/
+	//printf("%s", path_extract(envp));
+	pipex.splitted_path = ft_split(path_extract(envp), ':');
+	int i = 0;
+	while(pipex.splitted_path[i])
+	{
+		if((ft_strncmp("/usr/bin", pipex.splitted_path[i], 8) == 0))
+		{
+			pipex.command_path = ft_strjoin(pipex.splitted_path[i], "/");
+			free(pipex.splitted_path);
+			pipex.command = ft_strjoin(pipex.command_path, cmd)
+		}
+		i++;
+	}
+
+	printf("%s", pipex.command_path);
 }
