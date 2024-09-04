@@ -1,6 +1,6 @@
 NAME = pipex
-CFLAGS = -Wall
-SRC = src/utils.c
+CFLAGS = -Wall -Werror -Wextra
+SRC = src/utils.c src/error_handling.c src/path_handling.c src/pipex.c
 LIBFT = libft
 OBJS = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: ommehdiz <ommehdiz@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:26:55 by ommehdiz          #+#    #+#             */
-/*   Updated: 2024/08/25 15:33:54 by ommehdiz         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:21:00 by ommehdiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <sys/types.h>
 # include "../libft/libft.h"
 
 typedef struct s_pipeline
@@ -28,15 +29,19 @@ typedef struct s_pipeline
 	int		pid1;
 	int		pid2;
 	char	**command;
-	char	**command_path;
+	char	*command_path;
 	char	**splitted_path;
 	char	*env_path;
 }	t_pipeline;
 
-void	ft_putstr(char *str);
-void	free_everything(t_pipeline pipeline);
-char	*get_path(char **splitted_path, char *command);
-char	*find_path(char **envp);
-void	check_files(int argc, char **argv);
+void	free_all(t_pipeline *pipex);
+void	file_checker(int argc, char **argv);
+char	*path_extract(char **envp);
+char	*command_to_path(char **splitted_path, char **cmd);
+char	*full_path(char *cmd, char **envp);
+void	open_files(t_pipeline *pipex, char **argv);
+void	setup_pipe_and_fork(t_pipeline *pipex, char **argv, char **envp);
+void	child(t_pipeline *pipex, char **argv, char **envp);
+void	parent(t_pipeline *pipex, char **argv, char **envp);
 
 #endif
